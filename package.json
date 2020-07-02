@@ -1,0 +1,16 @@
+{
+  "name": "esonotifier",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "express": "^4.17.1",
+    "node-telegram-bot-api": "^0.50.0"
+  }
+}

@@ -1,0 +1,11 @@
+{
+    "port": 9673,
+    
+    "modules": {
+        "telegram": {
+            "use": true,
+            "token": "123456789",
+            "chatId": 0
+        }
+    }
+}
