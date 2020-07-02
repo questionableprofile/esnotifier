@@ -25,14 +25,23 @@ export default class TelegramModule {
     }
 
     handleEvent (code, data) {
-        console.log(code, data);
-        this.bot.sendMessage(mconfig.chatId, `${code}`);
+        const gameData = data.gameData;
+        const eventData = data.eventData;
+        const actor = data.actor;
 
-        // let result;
-        // switch(code) {
-            // case 'chat':
-                // result = `${data.id}: ${data.}`
-        // }
+        let result = gameData && gameData.node ? `[${gameData.node}]` : '';
+
+        switch(code) {
+            case 'chat':
+                result += ` ${actor.id}:${actor.name}: ${eventData.message}`;
+                break;
+            default:
+                console.warn(`unknown event code: ${code}`);
+                result += '[no data]';
+        }
+
+        this.bot.sendMessage(mconfig.chatId, `${code}`);
+        this.bot.sendMessage(mconfig.chatId, result);
     }
 
     static init () {
