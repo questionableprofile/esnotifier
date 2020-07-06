@@ -24,8 +24,11 @@ Edit the following part of the `config.txt`
 - To enable Telegram module leave field `"use"` - `true`
 
 ### Running 
-Just
-`$ npm start`
+
+```bash
+$ npm install
+$ npm start
+```
 
 ## Development
 
@@ -42,7 +45,7 @@ Example JSON scheme:
           "node": "ext_square"
         },
         "eventData": {
-          "id": 1,
+          "sender": 1,
           "message": "Hello, World!"
         },
         "actor": {
