@@ -23,6 +23,12 @@ Edit the following part of the `config.txt`
 - Chat_id - `"chatId"` field
 - To enable Telegram module leave field `"use"` - `true`
 
+### Available clients
+
+To use Notifier, install one of the following clients
+
+- [Tampermonkey Userscript](https://github.com/tttooottt/eso-userscripts/raw/master/notifier/notifier.user.js)
+
 ### Running 
 
 ```bash
