@@ -36,7 +36,7 @@ export default class TelegramModule {
                 result += `[${actor.id}] ${actor.name}: ${eventData.message}`;
                 break;
             case 'tryMessage':
-                result += `[${actor.id}] ${actor.name}: ${eventData.success ? 'успешно': 'безуспешно'} ${eventData.message}`;
+                result += `[${actor.id}] [try] ${actor.name}: ${eventData.success ? 'успешно': 'безуспешно'} ${eventData.message}`;
                 break;
             case 'userRoll':
                 result += `[${actor.id}] [roll] ${actor.name} rolled ${eventData.num}`;
