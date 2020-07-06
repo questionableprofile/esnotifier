@@ -45,6 +45,7 @@ Example JSON scheme:
           "node": "ext_square"
         },
         "eventData": {
+          "reason": "EVENT_CODE"
           "sender": 1,
           "message": "Hello, World!"
         },
