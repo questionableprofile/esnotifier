@@ -14,7 +14,7 @@ export default class Config {
         telegram: {
             use: false,
             token: '',
-            chatId: 463829238
+            chatId: 0
         }
     };
 

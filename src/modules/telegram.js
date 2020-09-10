@@ -48,6 +48,9 @@ export default class TelegramModule {
                 })
                 result += `[${actor.id}] [dice] ${actor.name} rolled ${diceString}`;
                 break;
+            case 'youtubePlaying':
+                result += `[${actor.id} [yt-play]] ${actor.name} played https://www.youtube.com/watch?v=${eventData.track.id}`;
+                break;
             default:
                 console.warn(`unknown event code: ${code}`);
                 result += `[no data] [${code}]`;
