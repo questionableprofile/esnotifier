@@ -2,6 +2,7 @@ import Bot from 'node-telegram-bot-api';
 
 import Config from '../config.js';
 import EventHandler from '../eventHandler.js';
+import decodeHTMLEntities from '../util.js';
 
 /**
  * @type {Config}
@@ -33,10 +34,10 @@ export default class TelegramModule {
 
         switch(code) {
             case 'chat':
-                result += `[${actor.id}] ${actor.name}: ${eventData.message}`;
+                result += `[${actor.id}] ${actor.name}: ${decodeHTMLEntities(eventData.message)}`;
                 break;
             case 'tryMessage':
-                result += `[${actor.id}] [try] ${actor.name}: ${eventData.success ? 'успешно': 'безуспешно'} ${eventData.message}`;
+                result += `[${actor.id}] [try] ${actor.name}: ${eventData.success ? 'успешно': 'безуспешно'} ${decodeHTMLEntities(eventData.message)}`;
                 break;
             case 'userRoll':
                 result += `[${actor.id}] [roll] ${actor.name} rolled ${eventData.num}`;
@@ -49,7 +50,7 @@ export default class TelegramModule {
                 result += `[${actor.id}] [dice] ${actor.name} rolled ${diceString}`;
                 break;
             case 'youtubePlaying':
-                result += `[${actor.id} [yt-play]] ${actor.name} played https://www.youtube.com/watch?v=${eventData.track.id}`;
+                result += `[${actor.id}] [yt-play] ${actor.name} played https://www.youtube.com/watch?v=${eventData.track.id}`;
                 break;
             default:
                 console.warn(`unknown event code: ${code}`);
