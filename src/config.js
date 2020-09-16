@@ -9,6 +9,7 @@ export default class Config {
     static configurationFile = 'config.txt';
 
     port = 9673;
+    debug = false;
     
     modules = {
         telegram: {

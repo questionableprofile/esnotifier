@@ -19,8 +19,15 @@ app.use((request, response, next) => {
 app.post('/event', (req, res) => {
     const body = req.body;
     if (body && body.code) {
-        if (body.data)
+        if (config.debug) {
+            console.log(`code: ${body.code} raw data:`);
+            console.log(body.data);
+            console.log(req.headers);
+            // console.log(req);
+        }
+        if (body.data) {
             EventHandler.handle(body.code, body.data);
+        }
         else
             EventHandler.handle(body.code);
         
