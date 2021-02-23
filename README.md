@@ -27,7 +27,7 @@ Edit the following part of the `config.txt`
 
 To use Notifier, install one of the following clients
 
-- [Tampermonkey Userscript](https://github.com/tttooottt/eso-userscripts/raw/master/notifier/notifier.user.js)
+- [Tampermonkey Userscript](https://github.com/questionableprofile/eso-userscripts/raw/master/notifier/notifier.user.js)
 
 ### Running 
 
