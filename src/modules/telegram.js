@@ -57,6 +57,9 @@ export default class TelegramModule {
                     videoLink = `https://www.youtube.com/watch?v=${eventData.track.id}`;
                 result += `[${actor.id}] [yt-play] ${actor.name} played ${videoLink}`;
                 break;
+            case 'esoDisconnected':
+                result += `DISCONNECT on one of the tabs`;
+                break;
             default:
                 console.warn(`unknown event code: ${code}`);
                 result += `[no data] [${code}]`;
