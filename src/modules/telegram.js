@@ -58,7 +58,7 @@ export default class TelegramModule {
                 result += `[${actor.id}] [yt-play] ${actor.name} played ${videoLink}`;
                 break;
             case 'esoDisconnected':
-                result += `DISCONNECT on one of the tabs`;
+                result += `DISCONNECT`;
                 break;
             default:
                 console.warn(`unknown event code: ${code}`);
