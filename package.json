@@ -12,6 +12,7 @@
   "type": "module",
   "dependencies": {
     "express": "^4.17.1",
-    "node-telegram-bot-api": "^0.50.0"
+    "node-telegram-bot-api": "^0.50.0",
+    "html-entities": "^2.3.2"
   }
 }

@@ -1,0 +1,2 @@
+powershell "npm start"
+pause

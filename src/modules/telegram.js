@@ -2,11 +2,12 @@ import Bot from 'node-telegram-bot-api';
 
 import Config from '../config.js';
 import EventHandler from '../eventHandler.js';
-import decodeHTMLEntities from '../util.js';
+import pkg from '../../node_modules/html-entities/lib/index.js';
 
 /**
  * @type {Config}
  */
+const {decode} = pkg;
 const config = Config.Get();
 const mconfig = config.modules.telegram;
 
@@ -29,15 +30,17 @@ export default class TelegramModule {
         const gameData = data.gameData;
         const eventData = data.eventData;
         const actor = data.actor;
-
+        let date = new Date();
+        let hour = (date.getHours() < 10 ? "0" : "") + date.getHours();
+        let min = (date.getMinutes() < 10 ? "0" : "") + date.getMinutes();
         let result = gameData && gameData.node ? `[${gameData.node}] ` : '';
 
         switch(code) {
             case 'chat':
-                result += `[${actor.id}] ${actor.name}: ${decodeHTMLEntities(eventData.message)}`;
+                result += `[${actor.id}] ${actor.name}:  ${eventData.message}`;
                 break;
             case 'tryMessage':
-                result += `[${actor.id}] [try] ${actor.name}: ${eventData.success ? 'успешно': 'безуспешно'} ${decodeHTMLEntities(eventData.message)}`;
+                result += `[${actor.id}] [try] ${actor.name}: ${eventData.success ? 'успешно': 'безуспешно'} ${eventData.message}`;
                 break;
             case 'userRoll':
                 result += `[${actor.id}] [roll] ${actor.name} rolled ${eventData.num}`;
@@ -64,8 +67,8 @@ export default class TelegramModule {
                 console.warn(`unknown event code: ${code}`);
                 result += `[no data] [${code}]`;
         }
-        console.log(`received event '${code}'`);
-        this.bot.sendMessage(mconfig.chatId, result);
+        console.log(`[${hour}:${min}] received event '${code}'`);
+        this.bot.sendMessage(mconfig.chatId, decode(result));
     }
 
     static init () {
