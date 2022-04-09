@@ -39,6 +39,9 @@ export default class TelegramModule {
             case 'chat':
                 result += `[${actor.id}] ${actor.name}:  ${eventData.message}`;
                 break;
+            case 'serverBroadcast':
+                result += `ГлавФистун: ${eventData.message}`;
+                break;
             case 'tryMessage':
                 result += `[${actor.id}] [try] ${actor.name}: ${eventData.success ? 'успешно': 'безуспешно'} ${eventData.message}`;
                 break;
