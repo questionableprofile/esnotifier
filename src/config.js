@@ -26,7 +26,10 @@ export default class Config {
             const obj = JSON.parse(data);
             result = Object.assign(new Config(), obj);
         } catch (e) {
-            result = new Config();
+            console.error('Missing or incorrect configuration file');
+            console.error(e);
+            // fs.writeFileSync(Config.configurationFile, JSON.stringify(new Config));
+            return;
         }
 
         defaultConfig = result;
@@ -34,10 +37,14 @@ export default class Config {
         return result;
     }
 
+    static write (file = Config.configurationFile) {
+        fs.writeFileSync(file, JSON.stringify(Config.getConfig(), null, '\t'));
+    }
+
     /**
      * @returns {Config}
      */
-    static Get () {
+    static getConfig () {
         if (!defaultConfig)
             Config.load();
         return defaultConfig;

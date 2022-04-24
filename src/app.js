@@ -3,11 +3,14 @@ import Express from 'express';
 import EventHandler from './eventHandler.js';
 import Config from './config.js';
 import TelegramModule from './modules/telegram.js';
+import Commands from "./commands/Commands.js";
 
 const config = Config.load();
-TelegramModule.init();
+const commands = new Commands();
+const telegram = new TelegramModule(commands);
 
 const app = Express();
+const esoCommands = [];
 
 app.use(Express.json());
 app.use((request, response, next) => {
@@ -39,4 +42,20 @@ app.post('/event', (req, res) => {
     res.end();
 });
 
+app.get('/commands', (req, res) => {
+    const list = [];
+    while (esoCommands.length > 0)
+        list.push(esoCommands.pop());
+    const result = {
+        commands: list
+    };
+    res.status(200);
+    res.send(result);
+    res.end();
+});
+
 app.listen(config.port, () => console.log(`server started on port ${config.port}`));
+
+export function pushCommand (esoCommand) {
+    esoCommands.push(esoCommand);
+}

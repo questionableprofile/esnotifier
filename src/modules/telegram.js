@@ -3,27 +3,72 @@ import Bot from 'node-telegram-bot-api';
 import Config from '../config.js';
 import EventHandler from '../eventHandler.js';
 import pkg from '../../node_modules/html-entities/lib/index.js';
+import {CommandContext} from "../commands/commandUtil.js";
+import {EsoController} from "../commands/EsoApi.js";
 
 /**
  * @type {Config}
  */
 const {decode} = pkg;
-const config = Config.Get();
-const mconfig = config.modules.telegram;
 
 export default class TelegramModule {
     /**
-     * @type {Bot}
+     * @type {TelegramBot}
      */
     bot;
+    commands;
+    chatMode = false;
 
-    constructor () {
+    constructor (commands) {
         /**
          * @todo bot loading seems asynchronous. needs to be handled properly.
          */
-        this.bot = new Bot(mconfig.token, { polling: true });
+        this.mconfig = Config.getConfig().modules.telegram;
 
+        if (!this.mconfig.use)
+            return;
+
+        this.commands = commands;
+        this.bot = new Bot(this.mconfig.token, { polling: true });
         EventHandler.subscribe((code, data) => this.handleEvent(code, data));
+        this.bot.on('message', (msg) => this.onMessage(msg));
+    }
+
+    onMessage (msg) {
+        const id = msg.chat.id;
+        const text = msg.text || '';
+        const originCtx = new CommandContext('telegram', text, msg, this,
+            (text) => this.sendMessage(text),
+            (cmd, ctx) => this.access(cmd, ctx),
+            (ctx) => this.setOwner(ctx)
+        );
+        if (msg.entities && msg.entities.reduce((prev, cur) => prev || cur.type === 'bot_command', false)) {
+            this.commands.execute(text.slice(1), originCtx);
+        }
+        else if (msg.text && this.chatMode) {
+            EsoController.sendMessage(msg.text);
+        }
+    }
+
+    sendMessage (text) {
+        this.bot.sendMessage(this.mconfig.chatId, text);
+    }
+
+    access (command, commandContext) {
+        if (!this.mconfig.chatId && command.getName() === 'start')
+            return true;
+        return this.mconfig.chatId === commandContext.context.chat.id;
+    }
+
+    setOwner (ctx) {
+        const id = ctx.context.chat.id;
+        if (this.mconfig.chatId)
+            return false;
+
+        this.mconfig.chatId = id;
+        // console.log(config);
+        Config.write();
+        return true;
     }
 
     handleEvent (code, data) {
@@ -57,7 +102,7 @@ export default class TelegramModule {
                 break;
             case 'youtubePlaying':
                 let videoLink = '';
-                if (eventData.track.type == '2ch')
+                if (eventData.track.type === '2ch')
                     videoLink = eventData.track.id;
                 else
                     videoLink = `https://www.youtube.com/watch?v=${eventData.track.id}`;
@@ -71,11 +116,6 @@ export default class TelegramModule {
                 result += `[no data] [${code}]`;
         }
         console.log(`[${hour}:${min}] received event '${code}'`);
-        this.bot.sendMessage(mconfig.chatId, decode(result));
-    }
-
-    static init () {
-        if (mconfig.use)
-            return new TelegramModule();
+        this.bot.sendMessage(this.mconfig.chatId, decode(result));
     }
 }
