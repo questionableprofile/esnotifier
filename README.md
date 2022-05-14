@@ -23,18 +23,21 @@ Edit the following part of the `config.txt`
 - Chat_id - `"chatId"` field
 - To enable Telegram module leave field `"use"` - `true`
 
-### Available clients
+### Client
 
-To use Notifier, install one of the following clients
-
-- [Tampermonkey Userscript](https://github.com/questionableprofile/eso-userscripts/raw/master/notifier/notifier.user.js)
+Client is integrated into eso, use `/notf` command to enable it
 
 ### Running 
 
-```bash
+```
 $ npm install
+```
+
+and then
+```bash
 $ npm start
 ```
+or click `eso.bat` on Windows
 
 ## Development
 
