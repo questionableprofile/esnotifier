@@ -17,7 +17,7 @@ export default class TelegramModule {
      */
     bot;
     commands;
-    chatMode = false;
+    chatMode = true;
 
     constructor (commands) {
         /**
