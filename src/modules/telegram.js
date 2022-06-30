@@ -18,6 +18,7 @@ export default class TelegramModule {
     bot;
     commands;
     chatMode = true;
+    skipCommands = ['/play', '/skip', '/ll', '/node', '/try', '/roll', '/dice', '/mm'];
 
     constructor (commands) {
         /**
@@ -34,6 +35,15 @@ export default class TelegramModule {
         this.bot.on('message', (msg) => this.onMessage(msg));
     }
 
+    shouldSkipCommand (text) {
+        for (let cmd of this.skipCommands) {
+            if (text.startsWith(cmd)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     onMessage (msg) {
         const id = msg.chat.id;
         const text = msg.text || '';
@@ -42,7 +52,7 @@ export default class TelegramModule {
             (cmd, ctx) => this.access(cmd, ctx),
             (ctx) => this.setOwner(ctx)
         );
-        if (msg.entities && msg.entities.reduce((prev, cur) => prev || cur.type === 'bot_command', false)) {
+        if (msg.entities && msg.entities.reduce((prev, cur) => prev || cur.type === 'bot_command', false) && !this.shouldSkipCommand(msg.text)) {
             this.commands.execute(text.slice(1), originCtx);
         }
         else if (msg.text && this.chatMode) {
