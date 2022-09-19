@@ -18,7 +18,7 @@ export default class TelegramModule {
     bot;
     commands;
     chatMode = true;
-    skipCommands = ['/play', '/skip', '/ll', '/node', '/try', '/roll', '/dice', '/mm'];
+    skipCommands = ['/play', '/skip', '/ll', '/node', '/try', '/roll', '/dice', '/mm', '/autoreconnect'];
 
     constructor (commands) {
         /**
@@ -46,8 +46,10 @@ export default class TelegramModule {
 
     onMessage (msg) {
         const id = msg.chat.id;
-        if (id != this.mconfig.chatId)
+        if (id != this.mconfig.chatId) {
+            console.log(msg.chat);
             return;
+        }
         const text = msg.text || '';
         const originCtx = new CommandContext('telegram', text, msg, this,
             (text) => this.sendMessage(text),
