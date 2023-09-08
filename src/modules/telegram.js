@@ -116,7 +116,7 @@ export default class TelegramModule {
                 break;
             case 'youtubePlaying':
                 let videoLink = '';
-                if (eventData.track.type === '2ch')
+                if (eventData.track.type === '2ch' || eventData.track.type === 'other')
                     videoLink = eventData.track.id;
                 else
                     videoLink = `https://www.youtube.com/watch?v=${eventData.track.id}`;
