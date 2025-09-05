@@ -15,7 +15,8 @@ export default class Config {
         telegram: {
             use: false,
             token: '',
-            chatId: 0
+            chatId: 0,
+            receiveDisconnects: true
         }
     };
 

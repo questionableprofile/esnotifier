@@ -5,7 +5,8 @@
         "telegram": {
             "use": true,
             "token": "123456789",
-            "chatId": 0
+            "chatId": 0,
+            "receiveDisconnects": true
         }
     }
 }

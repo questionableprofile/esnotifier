@@ -118,6 +118,8 @@ export default class TelegramModule {
                 result += `[${actor.id}] [yt-play] ${actor.name} played ${videoLink}`;
                 break;
             case 'esoDisconnected':
+                if (!this.mconfig.receiveDisconnects)
+                    return;
                 result += `DISCONNECT`;
                 break;
             default:
