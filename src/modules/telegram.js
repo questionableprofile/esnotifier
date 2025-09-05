@@ -2,14 +2,9 @@ import Bot from 'node-telegram-bot-api';
 
 import Config from '../config.js';
 import EventHandler from '../eventHandler.js';
-import pkg from '../../node_modules/html-entities/lib/index.js';
+import {decode} from 'html-entities';
 import {CommandContext} from "../commands/commandUtil.js";
 import {EsoController} from "../commands/EsoApi.js";
-
-/**
- * @type {Config}
- */
-const {decode} = pkg;
 
 export default class TelegramModule {
     /**

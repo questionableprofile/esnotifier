@@ -11,8 +11,8 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "express": "^4.17.1",
-    "node-telegram-bot-api": "^0.50.0",
-    "html-entities": "^2.3.2"
+    "express": "^5.1.0",
+    "node-telegram-bot-api": "^0.66.0",
+    "html-entities": "^2.6.0"
   }
 }
